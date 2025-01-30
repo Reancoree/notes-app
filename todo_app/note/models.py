@@ -10,6 +10,10 @@ class Note(models.Model):
         YELLOW = 'yellow', 'Желтый'
         GREEN = 'green', 'Зеленый'
 
+    class AccessibleManager(models.Manager):
+        def get_queryset(self):
+            return Note.objects.filter(is_deleted=False)
+
     title = models.CharField(
         max_length=255, blank=False, verbose_name='Название')
     text = models.TextField(blank=True, verbose_name='Текст')
@@ -26,6 +30,14 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.title = self.title.capitalize()
+        self.text = self.text.capitalize()
+        super().save(*args, **kwargs)
+
+    objects = models.Manager()
+    public = AccessibleManager()
 
 
 class Category(models.Model):

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block static_url %}
+  <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+{% endblock %}
+
+{% block content %}
+  {% if empty %}
+    <h1>Пусто</h1>
+  {% else %}
+    <ul>
+      {% for n in notes %}
+        <li>
+          <p>{{ n.title }}</p>
+          <p>{{ n.text }}</p>
+        </li>
+        <br />
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <p>
+    <a href="#">Добавить заметку</a>
+  </p>
+{% endblock %}
