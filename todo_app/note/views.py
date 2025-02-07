@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
 from .utils import DataMixin
 from .models import Note
@@ -15,14 +14,24 @@ class IndexPage(DataMixin, ListView):
     def get_queryset(self):
         return Note.public.all()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return self.get_mixin_context(context)
 
-
-class AddNotePage(CreateView):
-    template_name = 'note/add_note.html'
+class AddNotePage(DataMixin, CreateView):
     model = Note
+    template_name = 'note/add_note.html'
     success_url = reverse_lazy('index')
-    
+    title = 'Новая заметка'
+    h1 = 'Добавить заметку'
+
     fields = ['title', 'text', 'category']
+
+
+class UpdateNotePage(DataMixin, UpdateView):
+    model = Note
+    template_name = 'note/change_note.html'
+    success_url = reverse_lazy('index')
+    title = 'Изменение заметки'
+    h1 = 'Изменить заметку'
+    
+    fields = ['title', 'text', 'color', 'category']
+    
+    

@@ -51,25 +51,45 @@
 }
 
 h1 {
-    margin-bottom: 20px; /* Отступ снизу для отделения от заметок */
+    margin-bottom: 20px;
+    /* Отступ снизу для отделения от заметок */
 }
 
 .notes-list {
     display: flex;
-    flex-wrap: wrap; /* Позволяет размещать заметки в несколько строк */
+    flex-wrap: wrap;
+    /* Позволяет размещать заметки в несколько строк */
 }
 
 .note-card {
     background-color: #ecf0f1;
     border-radius: 25px;
-    width: calc(25% - 20px); /* 1/4 ширины минус отступы */
-    aspect-ratio: 1; /* Сохраняет соотношение 1:1 для квадратной формы */
-    margin: 10px; /* Отступы вокруг карточки */
+    width: calc(25% - 20px);
+    /* 1/4 ширины минус отступы */
+    aspect-ratio: 1;
+    /* Сохраняет соотношение 1:1 для квадратной формы */
+    margin: 10px;
+    /* Отступы вокруг карточки */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрирование по вертикали */
-    align-items: center; /* Центрирование по горизонтали */
+    justify-content: center;
+    /* Центрирование по вертикали */
+    align-items: center;
+    /* Центрирование по горизонтали */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    /* Убираем подчеркивание текста */
+    color: inherit;
+    /* Убираем цвет ссылки, чтобы использовать цвет текста карточки */
+    transition: transform 0.3s, box-shadow 0.3s;
+    /* Плавный переход для трансформации и тени */
+}
+
+.note-card:hover {
+    transform: scale(1.05);
+    /* Увеличиваем карточку на 5% при наведении */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Увеличиваем тень при наведении */
 }
 
 .note-card h2 {
@@ -82,4 +102,50 @@ h1 {
     font-size: 16px;
     color: #2c3e50;
     text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px; /* Отступы между полями формы */
+    text-align: center;
+    font-weight: 600;
+    margin: 20px;
+}
+
+.form-input {
+    width: 100%; /* Ширина поля ввода */
+    padding: 10px; /* Отступы внутри поля */
+    border: gray 1px solid; 
+    border-radius: 10px;
+    background-color: transparent; /* Прозрачный фон */
+    color: #2c3e50; /* Цвет текста */
+    font-size: 16px; /* Размер шрифта */
+    outline: none; /* Убираем обводку при фокусе */
+    text-align: center;
+    resize: none;
+    overflow: hidden;
+    min-height: 0%;
+}
+
+.form-input::placeholder {
+    color: rgba(44, 62, 80, 0.5); /* Цвет текста плейсхолдера */
+    opacity: 1; /* Убираем прозрачность плейсхолдера */
+}
+
+.btn {
+    background-color: #424445; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем рамку */
+    padding: 10px 15px; /* Отступы внутри кнопки */
+    border-radius: 5px; /* Скругление углов кнопки */
+    cursor: pointer; /* Указатель при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+    margin-bottom: 20px;
+}
+
+.btn:hover {
+    background-color: #2980b9; /* Цвет фона кнопки при наведении */
+}
+
+p {
+    margin-bottom: 20px;
 }
