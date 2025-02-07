@@ -61,7 +61,7 @@ h1 {
 
 .note-card {
     background-color: #ecf0f1;
-    border-radius: 5px;
+    border-radius: 25px;
     width: calc(25% - 20px); /* 1/4 ширины минус отступы */
     aspect-ratio: 1; /* Сохраняет соотношение 1:1 для квадратной формы */
     margin: 10px; /* Отступы вокруг карточки */

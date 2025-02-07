@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView
 
 from .utils import DataMixin
 from .models import Note
@@ -17,3 +18,11 @@ class IndexPage(DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context)
+
+
+class AddNotePage(CreateView):
+    template_name = 'note/add_note.html'
+    model = Note
+    success_url = reverse_lazy('index')
+    
+    fields = ['title', 'text', 'category']
