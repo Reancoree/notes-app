@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #2c3e50;
+    padding: 20px;
+    color: white;
+    transition: 0.3s;
+}
+
+.logo {
+    font-size: 24px;
+    margin-bottom: 30px;
+    padding: 10px;
+    text-align: center;
+}
+
+.menu-items {
+    list-style: none;
+}
+
+.menu-item {
+    margin-bottom: 15px;
+}
+
+.menu-item a {
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    display: block;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.menu-item a:hover {
+    background-color: #34495e;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Позволяет размещать заметки в несколько строк */
+}
+
+.note-card {
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    width: calc(25% - 20px); /* 1/4 ширины минус отступы */
+    aspect-ratio: 1; /* Сохраняет соотношение 1:1 для квадратной формы */
+    margin: 10px; /* Отступы вокруг карточки */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрирование по вертикали */
+    align-items: center; /* Центрирование по горизонтали */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.note-card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.note-card p {
+    font-size: 16px;
+    color: #2c3e50;
+    text-align: center;
+}
