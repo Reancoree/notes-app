@@ -1,6 +1,6 @@
 <div class="notes-list">
     {% for note in notes %}
-        <a href="{% url 'change_note' note.pk %}" class="note-card">
+        <a href="{% url 'change_note' note.pk %}" class="note-card {{ note.color }}">
             <h2>{{ note.title }}</h2>
             <p>{{ note.text }}</p>
             <p>Категория: {{ note.category }}</p>

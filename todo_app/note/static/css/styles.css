@@ -157,3 +157,24 @@ p {
 .btn.confirm {
     margin-top: 20px;
 }
+
+.note-card.default {
+    background-color: #ecf0f1;
+}
+
+.note-card.red {
+    background-color: rgba(255, 0, 0, 0.39);
+    color: white; /* Чтобы текст был виден */
+}
+
+.note-card.blue {
+    background-color: rgba(173, 216, 230, 0.42);
+}
+
+.note-card.yellow {
+    background-color: rgba(255, 255, 0, 0.4);
+}
+
+.note-card.green {
+    background-color: rgba(144, 238, 144, 0.41);
+}
