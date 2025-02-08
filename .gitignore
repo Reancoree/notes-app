@@ -1,0 +1,5 @@
+todo_app/db.sqlite3-wal
+todo_app/db.sqlite3-shm
+
+__pycache__/
+/.vscode/
