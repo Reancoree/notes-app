@@ -4,4 +4,6 @@
 
 {% block content %}
     {% show_notes notes %}
+
+    <button class="floating-button" onclick="window.location.href='{% url 'add_note' %}'">+</button>
 {% endblock %}
