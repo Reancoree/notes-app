@@ -35,20 +35,28 @@ class UpdateNotePage(DataMixin, UpdateView):
 
     fields = ['title', 'text', 'color', 'category']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.get_object().is_deleted:
+            context['title'] = 'Заметка в корзине'
+            context['h1'] = 'Заметка в корзине'
+            return context
+        return context
+
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
 
         if request.GET.get('trash'):
             self.object.is_deleted = True
             self.object.save()
-            return HttpResponseRedirect(self.get_success_url())  # не работает хуйня
+            return HttpResponseRedirect(self.get_success_url())
         return super().get(request, *args, **kwargs)
 
 
 class DeleteNotePage(DataMixin, DeleteView):
     model = Note
     template_name = 'note/delete_note.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('trash')
     title = 'Удаление заметки'
     h1 = title
 

@@ -42,10 +42,17 @@
             </div>
             <div>
                 <button type="submit" class="btn">Сохранить изменения</button>
-                <button type="button" class="btn delete"
-                        onclick="window.location.href='{% url 'change_note' note.pk %}?trash=True'">
-                    В корзину
-                </button>
+                {% if object.is_deleted %}
+                    <button type="button" class="btn delete"
+                            onclick="window.location.href='{% url 'delete_note' note.pk %}'">
+                        Удалить
+                    </button>
+                {% else %}
+                    <button type="button" class="btn delete"
+                            onclick="window.location.href='{% url 'change_note' note.pk %}?trash=True'">
+                        В корзину
+                    </button>
+                {% endif %}
             </div>
         </form>
     </div>
