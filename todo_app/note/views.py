@@ -41,7 +41,7 @@ class UpdateNotePage(DataMixin, UpdateView):
         if request.GET.get('trash'):
             self.object.is_deleted = True
             self.object.save()
-            HttpResponseRedirect(self.get_success_url())  # не работает хуйня
+            return HttpResponseRedirect(self.get_success_url())  # не работает хуйня
         return super().get(request, *args, **kwargs)
 
 
