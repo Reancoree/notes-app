@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -19,7 +18,10 @@ class Migration(migrations.Migration):
                 ('text', models.TextField(blank=True, verbose_name='Текст')),
                 ('time_create', models.DateTimeField(auto_now_add=True, verbose_name='Время создания')),
                 ('time_update', models.DateTimeField(auto_now=True, verbose_name='Время обновления')),
-                ('color', models.CharField(blank=True, choices=[('default', 'Обычный'), ('red', 'Красный'), ('blue', 'Голубой'), ('yellow', 'Желтый'), ('green', 'Зеленый')], default='default', max_length=15, verbose_name='Цвет заметки')),
+                ('color', models.CharField(blank=True,
+                                           choices=[('default', 'Обычный'), ('red', 'Красный'), ('blue', 'Голубой'),
+                                                    ('yellow', 'Желтый'), ('green', 'Зеленый')], default='default',
+                                           max_length=15, verbose_name='Цвет заметки')),
                 ('is_deleted', models.BooleanField(default=False, verbose_name='В корзине')),
             ],
         ),

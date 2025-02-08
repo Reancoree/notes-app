@@ -114,7 +114,7 @@ h1 {
 .form-input {
     width: 100%; /* Ширина поля ввода */
     padding: 10px; /* Отступы внутри поля */
-    border: gray 1px solid; 
+    border: gray 1px solid;
     border-radius: 10px;
     background-color: transparent; /* Прозрачный фон */
     color: #2c3e50; /* Цвет текста */
@@ -148,4 +148,12 @@ h1 {
 
 p {
     margin-bottom: 20px;
+}
+
+.btn.delete {
+    background-color: #ee6666;
+}
+
+.btn.confirm {
+    margin-top: 20px;
 }

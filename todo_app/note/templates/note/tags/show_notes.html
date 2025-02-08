@@ -1,0 +1,11 @@
+<div class="notes-list">
+    {% for note in notes %}
+        <a href="{% url 'change_note' note.pk %}" class="note-card">
+            <h2>{{ note.title }}</h2>
+            <p>{{ note.text }}</p>
+            <p>Категория: {{ note.category }}</p>
+        </a>
+    {% empty %}
+        <a href="{% url 'add_note' %}"><h2>Добавить заметку</h2></a>
+    {% endfor %}
+</div>

@@ -2,42 +2,51 @@
 {% load static %}
 
 {% block content %}
-  <div class="main-content">
-    <h1>{{ h1 }}</h1>
-    <form method="post" class="note-card">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="{{ form.title.id_for_label }}">Заголовок:</label>
-        <input type="text" name="title" id="{{ form.title.id_for_label }}" value="{{ form.title.value }}" class="form-input" required>
-      </div>
-      <div class="form-group">
-        <label for="{{ form.text.id_for_label }}">Текст:</label>
-        <textarea name="text" id="{{ form.text.id_for_label }}" class="form-input" required oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">{{ form.text.value }}</textarea>
-      </div>
-      <div class="form-group">
-        <label for="{{ form.color.id_for_label }}">Цвет:</label>
-        <select name="color" id="{{ form.color.id_for_label }}" class="form-input">
-            {% for color_choice in form.color.field.choices %}
-                {% if color_choice.0 != "" %}  {# Убираем пустое значение #}
-                    <option value="{{ color_choice.0 }}" {% if color_choice.0 == form.color.value %} selected {% endif %}>
-                        {{ color_choice.1 }}
-                    </option>
-                {% endif %}
-            {% endfor %}
-        </select>
+    <div class="main-content">
+        <form method="post" class="note-card">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Заголовок:</label>
+                <input type="text" name="title" id="{{ form.title.id_for_label }}" value="{{ form.title.value }}"
+                       class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.text.id_for_label }}">Текст:</label>
+                <textarea name="text" id="{{ form.text.id_for_label }}" class="form-input" required
+                          oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';">{{ form.text.value }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.color.id_for_label }}">Цвет:</label>
+                <select name="color" id="{{ form.color.id_for_label }}" class="form-input">
+                    {% for color_choice in form.color.field.choices %}
+                        {% if color_choice.0 != "" %}  {# Убираем пустое значение #}
+                            <option value="{{ color_choice.0 }}" {% if color_choice.0 == form.color.value %}
+                                    selected {% endif %}>
+                                {{ color_choice.1 }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.category.id_for_label }}">Категория:</label>
+                <select name="category" id="{{ form.category.id_for_label }}" class="form-input">
+                    <option value="" {% if form.category.value == "" %}selected{% endif %}>Не выбрано</option>
+                    {% for category in form.category.field.queryset %}
+                        <option value="{{ category.id }}"
+                                {% if category.id == form.category.value %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn">Сохранить изменения</button>
+                <button type="button" class="btn delete"
+                        onclick="window.location.href='{% url 'change_note' note.pk %}?trash=True'">
+                    В корзину
+                </button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="{{ form.category.id_for_label }}">Категория:</label>
-        <select name="category" id="{{ form.category.id_for_label }}" class="form-input">
-            <option value="" {% if form.category.value == "" %}selected{% endif %}>Не выбрано</option>
-            {% for category in form.category.field.queryset %}
-                <option value="{{ category.id }}" {% if category.id == form.category.value %}selected{% endif %}>
-                    {{ category.name }}
-                </option>
-            {% endfor %}
-        </select>
-    </div>
-      <button type="submit" class="btn">Сохранить изменения</button>
-    </form>
-  </div>
 {% endblock content %}

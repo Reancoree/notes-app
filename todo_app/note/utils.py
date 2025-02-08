@@ -4,6 +4,7 @@ from django.views import View
 class DataMixin(View):
     title = None
     h1 = None
+    context_object_name = 'notes'
 
     def get_mixin_context(self, context, **kwargs):
         context['title'] = self.title
