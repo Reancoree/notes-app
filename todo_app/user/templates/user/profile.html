@@ -22,8 +22,8 @@
         <div class="title">{{ user.email }}</div>
         <div class="actions">
             <div class="follow-info">
-                <h2><a href="#"><span>12</span><small>Followers</small></a></h2>
-                <h2><a href="#"><span>1000</span><small>Following</small></a></h2>
+                <h2><a href="#"><span>{% if user.is_superuser %}Админ{% else %}Пользователь{% endif %}</span></a></h2>
+                <h2><a href="{% url 'password_change' %}"><span>Поменять пароль</span></a></h2>
             </div>
             <div class="follow-btn">
                 <button onclick="location.href='{% url 'logout' %}?next={% url 'login' %}'">Выйти</button>
