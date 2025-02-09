@@ -3,20 +3,16 @@
 {% load note_extras %}
 
 {% block content %}
-    <!-- Модальное окно -->
-    <form id="fieldSelectionForm">
-        <label for="fields">Выберите категорию:</label>
-        <select id="fields" name="fields">
-            {% for note in notes %}
-                <option value="field1">{{ note.ca }}</option>
+    <div>
+        <form action="" method="get">
+            <button class="button" value="all" name="cat_id" onclick="this.form.submit()">Все категории</button>
+            {% for cat in categories %}
+                <button class="button" value="{{ cat.pk }}" name="cat_id"
+                        onclick="this.form.submit()">{{ cat }}</button>
             {% endfor %}
+        </form>
+    </div>
 
-
-            <option value="field2">Поле 2</option>
-            <option value="field3">Поле 3</option>
-            <option value="field4">Поле 4</option>
-        </select>
-    </form>
     {% show_notes notes %}
 
     <button class="floating-button" onclick="window.location.href='{% url 'add_note' %}'">+</button>

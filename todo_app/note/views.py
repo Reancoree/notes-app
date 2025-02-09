@@ -3,18 +3,31 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from .utils import DataMixin
-from .models import Note
+from .models import Note, Category
 
 
 class IndexPage(DataMixin, ListView):
     template_name = 'note/index.html'
     title = 'Главная'
     h1 = 'Заметки'
+    categories = Category.objects.all()
 
     def get_queryset(self):
-        if self.request.GET.get('cat_id'):
-            return Note.public.filter(category=self.request.GET['cat_id'])
+        cat_id = self.request.GET.get('cat_id')
+
+        if cat_id:
+            try:
+                cat = Category.objects.get(pk=cat_id)
+                return cat.notes.filter(is_deleted=False)
+            except (Category.DoesNotExist, ValueError):
+                return Note.public.all()
+
         return Note.public.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = self.categories
+        return context
 
 
 class AddNotePage(DataMixin, CreateView):
