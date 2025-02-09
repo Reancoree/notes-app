@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
@@ -62,7 +63,13 @@ class UpdateNotePage(DataMixin, UpdateView):
         if request.GET.get('trash'):
             self.object.is_deleted = True
             self.object.save()
-            return self.get_success_url()
+            return HttpResponseRedirect(self.success_url)
+
+        if request.GET.get('restore'):
+            self.object.is_deleted = False
+            self.object.save()
+            return HttpResponseRedirect(self.success_url)
+
         return super().get(request, *args, **kwargs)
 
 

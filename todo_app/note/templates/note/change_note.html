@@ -47,6 +47,10 @@
                             onclick="window.location.href='{% url 'delete_note' note.pk %}'">
                         Удалить
                     </button>
+                    <button type="button" class="btn"
+                            onclick="window.location.href='{% url 'change_note' object.pk %}?restore=True'">
+                        Восстановить
+                    </button>
                 {% else %}
                     <button type="button" class="btn delete"
                             onclick="window.location.href='{% url 'change_note' note.pk %}?trash=True'">

@@ -3,7 +3,7 @@
 {% block content %}
     <div class="notes-list">
         {% for cat in categories %}
-            <a href="{% url 'category' cat.slug %}" class="note-card cat">
+            <a href="{% url 'category_slug' cat.slug %}" class="note-card cat">
                 <p class="bold">{{ cat }}</p>
             </a>
         {% empty %}
