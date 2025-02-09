@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    {% block extra_css %}
+
+    {% endblock %}
 </head>
 <body>
 {% block sidebar %}
@@ -19,7 +22,7 @@
                 <a href="{% url 'trash' %}">Корзина</a>
             </li>
             <li class="menu-item">
-                <a href="#">Профиль</a>
+                <a href="{% url 'login' %}">Профиль</a>
             </li>
             <li class="menu-item">
                 <a href="{% url 'category' %}">Категории</a>
