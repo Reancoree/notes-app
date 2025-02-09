@@ -3,7 +3,7 @@
         <a href="{% url 'change_note' note.pk %}" class="note-card {{ note.color }}">
             <h2>{{ note.title }}</h2>
             <p>{{ note.text }}</p>
-            <p>Категория: {{ note.category }}</p>
+            <p>Категория: {% if note.category is not none %}{{ note.category }}{% else %}Не выбрана{% endif %} </p>
         </a>
     {% empty %}
         <a href="{% url 'add_note' %}"><h2>Добавить заметку</h2></a>

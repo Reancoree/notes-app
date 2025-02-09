@@ -220,3 +220,14 @@ p {
 .button:hover {
     background-color: #2c3e50; /* Темнее при наведении */
 }
+
+.cat {
+    width: calc(15% - 20px);
+    height: 90px;
+}
+
+.bold {
+    font-weight: bold;
+    margin: 0;
+    font-size: 20px;
+}

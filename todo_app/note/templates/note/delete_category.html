@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h3>Точно удалить категорию "{{ object }}"?</h3>
+        {{ form }}
+        <input class="btn confirm delete" type="submit" value="Подтвердить">
+    </form>
+{% endblock %}

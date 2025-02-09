@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="notes-list">
+        {% for cat in categories %}
+            <a href="{% url 'category' cat.slug %}" class="note-card cat">
+                <p class="bold">{{ cat }}</p>
+            </a>
+        {% empty %}
+            <a href="{% url 'add_category' %}"><h2>Добавить категорию</h2></a>
+        {% endfor %}
+    </div>
+
+    <button class="floating-button" onclick="window.location.href='{% url 'add_category' %}'">+</button>
+{% endblock %}

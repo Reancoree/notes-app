@@ -1,5 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from .utils import DataMixin
@@ -10,7 +9,6 @@ class IndexPage(DataMixin, ListView):
     template_name = 'note/index.html'
     title = 'Главная'
     h1 = 'Заметки'
-    categories = Category.objects.all()
 
     def get_queryset(self):
         cat_id = self.request.GET.get('cat_id')
@@ -26,7 +24,7 @@ class IndexPage(DataMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = self.categories
+        context['categories'] = Category.objects.all()
         return context
 
 
@@ -64,7 +62,7 @@ class UpdateNotePage(DataMixin, UpdateView):
         if request.GET.get('trash'):
             self.object.is_deleted = True
             self.object.save()
-            return HttpResponseRedirect(self.get_success_url())
+            return self.get_success_url()
         return super().get(request, *args, **kwargs)
 
 
@@ -85,3 +83,44 @@ class TrashNotePage(DataMixin, ListView):
 
     def get_queryset(self):
         return Note.objects.filter(is_deleted=True)
+
+
+class CategoryPage(DataMixin, ListView):
+    model = Category
+    template_name = 'note/category.html'
+    context_object_name = 'categories'
+
+    title = 'Категории'
+    h1 = title
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+
+class AddCategoryPage(DataMixin, CreateView):
+    model = Category
+    template_name = 'note/add_category.html'
+    success_url = reverse_lazy('category')
+    title = 'Новая категория'
+    h1 = 'Добавить категорию'
+
+    fields = ['name']
+
+
+class UpdateCategoryPage(DataMixin, UpdateView):
+    model = Category
+    template_name = 'note/update_category.html'
+
+    title = 'Редактирование категории'
+    h1 = title
+    context_object_name = 'category'
+
+    fields = ['name']
+
+
+class DeleteCategoryPage(DataMixin, DeleteView):
+    model = Category
+    template_name = 'note/delete_category.html'
+    success_url = reverse_lazy('category')
+    title = 'Удаление категории'
+    h1 = title
