@@ -13,18 +13,26 @@
                     {% csrf_token %}
                     <div class="login__field">
                         <i class="login__icon fas fa-user"></i>
-                        <input type="text" class="login__input" name="username" placeholder="Имя">
+                        <input type="text" class="login__input" name="username" placeholder="Введите имя">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" class="login__input" name="email" placeholder="Введите почту">
                     </div>
                     <div class="login__field">
                         <i class="login__icon fas fa-lock"></i>
-                        <input type="password" class="login__input" name="password" placeholder="Пароль">
+                        <input type="password" class="login__input" name="password1" placeholder="Введите пароль">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <input type="password" class="login__input" name="password2" placeholder="Повторите пароль">
                     </div>
                     {{ form.errors }}
                     <button class="button login__submit">
-                        <span class="button__text">Войти</span>
+                        <span class="button__text">Регистрация</span>
                         <i class="button__icon fas fa-chevron-right"></i>
                     </button>
-                    <a class="button login__submit" href="{% url 'user:register' %}">Регистрация</a>
+                    <a class="button login__submit" href="{% url 'login' %}">Войти</a>
                 </form>
             </div>
             <div class="screen__background">
