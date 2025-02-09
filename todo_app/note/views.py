@@ -16,16 +16,17 @@ class IndexPage(DataMixin, ListView):
 
         if cat_id:
             try:
-                cat = Category.objects.get(pk=cat_id)
-                return cat.notes.filter(is_deleted=False)
+                return Note.public.for_user(self.request.user, category_id=cat_id)
+                # cat = Category.objects.get(pk=cat_id)
+                # return cat.notes.filter(is_deleted=False)
             except (Category.DoesNotExist, ValueError):
-                return Note.public.all()
+                return Note.public.for_user(self.request.user)
 
-        return Note.public.all()
+        return Note.public.for_user(self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        context['categories'] = Category.objects.for_user(self.request.user)
         return context
 
 
@@ -37,6 +38,10 @@ class AddNotePage(DataMixin, CreateView):
     h1 = 'Добавить заметку'
 
     fields = ['title', 'text', 'category']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class UpdateNotePage(DataMixin, UpdateView):
@@ -101,7 +106,7 @@ class CategoryPage(DataMixin, ListView):
     h1 = title
 
     def get_queryset(self):
-        return Category.objects.all()
+        return Category.objects.for_user(self.request.user)
 
 
 class AddCategoryPage(DataMixin, CreateView):
@@ -112,6 +117,10 @@ class AddCategoryPage(DataMixin, CreateView):
     h1 = 'Добавить категорию'
 
     fields = ['name']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class UpdateCategoryPage(DataMixin, UpdateView):

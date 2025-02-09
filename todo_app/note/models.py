@@ -1,5 +1,19 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from pytils.translit import slugify
+
+
+class UserManager(models.Manager):
+    def for_user(self, user, **kwargs):
+        return self.filter(user=user, **kwargs)
+
+
+class AccessibleManager(models.Manager):
+    def get_queryset(self):
+        return Note.objects.filter(is_deleted=False)
+
+    def for_user(self, user, **kwargs):
+        return self.filter(user=user, is_deleted=False, **kwargs)
 
 
 class Note(models.Model):
@@ -9,10 +23,6 @@ class Note(models.Model):
         BlUE = 'blue', 'Голубой'
         YELLOW = 'yellow', 'Желтый'
         GREEN = 'green', 'Зеленый'
-
-    class AccessibleManager(models.Manager):
-        def get_queryset(self):
-            return Note.objects.filter(is_deleted=False)
 
     title = models.CharField(
         max_length=255, blank=False, verbose_name='Название')
@@ -27,6 +37,8 @@ class Note(models.Model):
         blank=False, default=False, verbose_name='В корзине')
     category = models.ForeignKey(
         'Category', on_delete=models.SET_NULL, null=True, blank=True, related_name='notes', verbose_name='Категория')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=False,
+                             verbose_name='Пользователь')
 
     def __str__(self):
         return self.title
@@ -36,7 +48,7 @@ class Note(models.Model):
         self.text = self.text.capitalize()
         super().save(*args, **kwargs)
 
-    objects = models.Manager()
+    objects = UserManager()
     public = AccessibleManager()
 
 
@@ -44,6 +56,8 @@ class Category(models.Model):
     name = models.CharField(max_length=50, blank=False,
                             verbose_name='Название')
     slug = models.SlugField(blank=False, verbose_name='Slug')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=False,
+                             verbose_name='Пользователь')
 
     def __str__(self):
         return self.name
@@ -51,3 +65,5 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    objects = UserManager()

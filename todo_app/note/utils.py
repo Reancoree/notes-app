@@ -1,7 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 
 
-class DataMixin(View):
+class DataMixin(LoginRequiredMixin, View):
     title = None
     h1 = None
     context_object_name = 'notes'
