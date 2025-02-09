@@ -26,7 +26,7 @@ class Note(models.Model):
     is_deleted = models.BooleanField(
         blank=False, default=False, verbose_name='В корзине')
     category = models.ForeignKey(
-        'Category', on_delete=models.PROTECT, null=True, blank=True, verbose_name='Категория')
+        'Category', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Категория')
 
     def __str__(self):
         return self.title

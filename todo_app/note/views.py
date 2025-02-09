@@ -12,6 +12,8 @@ class IndexPage(DataMixin, ListView):
     h1 = 'Заметки'
 
     def get_queryset(self):
+        if self.request.GET.get('cat_id'):
+            return Note.public.filter(category=self.request.GET['cat_id'])
         return Note.public.all()
 
 
