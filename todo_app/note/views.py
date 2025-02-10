@@ -3,8 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from .forms import AddNoteForm, AddCategoryForm
-from .utils import DataMixin
 from .models import Note, Category
+from .utils import DataMixin
 
 
 class IndexPage(DataMixin, ListView):
@@ -45,15 +45,15 @@ class AddNotePage(DataMixin, CreateView):
 class UpdateNotePage(DataMixin, UpdateView):
     model = Note
     template_name = 'note/change_note.html'
+    form_class = AddNoteForm
     success_url = reverse_lazy('index')
     context_object_name = 'note'
     title = 'Изменение заметки'
     h1 = 'Изменить заметку'
 
-    fields = ['title', 'text', 'color', 'category']
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        self.form_class.Meta.fields += ['color']
         if self.get_object().is_deleted:
             context['title'] = 'Заметка в корзине'
             context['h1'] = 'Заметка в корзине'

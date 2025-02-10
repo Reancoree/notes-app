@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/add_note.css' %}">
+{% endblock %}
 
 {% block content %}
-    <div class="note-card cat">
-        <p class="bold">{{ category }}</p>
-        <button type="button" class="btn delete"
-                onclick="window.location.href='{% url 'delete_category' category.slug %}'">
-            Удалить
-        </button>
+    <div class="form">
+        <div class="input-container ic2">
+            <div class="input">
+                {{ category }}
+                <button type="button" class="btn delete"
+                        onclick="window.location.href='{% url 'delete_category' category.slug %}'">
+                    Удалить
+                </button>
+            </div>
+        </div>
     </div>
 {% endblock %}
