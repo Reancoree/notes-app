@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
+from .forms import AddNoteForm, AddCategoryForm
 from .utils import DataMixin
 from .models import Note, Category
 
@@ -17,8 +18,6 @@ class IndexPage(DataMixin, ListView):
         if cat_id:
             try:
                 return Note.public.for_user(self.request.user, category_id=cat_id)
-                # cat = Category.objects.get(pk=cat_id)
-                # return cat.notes.filter(is_deleted=False)
             except (Category.DoesNotExist, ValueError):
                 return Note.public.for_user(self.request.user)
 
@@ -32,12 +31,11 @@ class IndexPage(DataMixin, ListView):
 
 class AddNotePage(DataMixin, CreateView):
     model = Note
+    form_class = AddNoteForm
     template_name = 'note/add_note.html'
     success_url = reverse_lazy('index')
     title = 'Новая заметка'
     h1 = 'Добавить заметку'
-
-    fields = ['title', 'text', 'category']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -113,10 +111,9 @@ class AddCategoryPage(DataMixin, CreateView):
     model = Category
     template_name = 'note/add_category.html'
     success_url = reverse_lazy('category')
+    form_class = AddCategoryForm
     title = 'Новая категория'
     h1 = 'Добавить категорию'
-
-    fields = ['name']
 
     def form_valid(self, form):
         form.instance.user = self.request.user

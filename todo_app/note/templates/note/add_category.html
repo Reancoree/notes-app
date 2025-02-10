@@ -1,9 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/add_note.css' %}">
+{% endblock %}
 
 {% block content %}
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Создать</button>
+        <div class="form">
+            <div class="subtitle">Создай категорию</div>
+            <div class="input-container ic2">
+                <input id="lastname" class="input" name="name" type="text" placeholder=" "/>
+                <div class="cut"></div>
+                <label for="lastname" class="placeholder">Название</label>
+            </div>
+            <button type="submit" class="submit">Создать</button>
+        </div>
+
     </form>
 {% endblock %}
