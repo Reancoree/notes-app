@@ -15,5 +15,7 @@
 
 - Django 4.2
 - Postgres
+
+### Доп. библиотеки
 - pytils (sligufy)
 - python-dotenv
