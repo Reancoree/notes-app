@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.core.cache import cache
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from .forms import AddNoteForm, AddCategoryForm
@@ -13,15 +14,25 @@ class IndexPage(DataMixin, ListView):
     h1 = 'Заметки'
 
     def get_queryset(self):
+        user = self.request.user
         cat_id = self.request.GET.get('cat_id')
 
-        if cat_id:
-            try:
-                return Note.public.for_user(self.request.user, category_id=cat_id)
-            except (Category.DoesNotExist, ValueError):
-                return Note.public.for_user(self.request.user)
+        cache_key = f'user_{user.id}_notes_cat_{cat_id or "all"}'
 
-        return Note.public.for_user(self.request.user)
+        cached_queryset = cache.get(cache_key)
+        if cached_queryset is not None:
+            return cached_queryset
+
+        try:
+            if cat_id:
+                queryset = Note.public.for_user(user, category_id=cat_id)
+            else:
+                queryset = Note.public.for_user(user)
+        except (Category.DoesNotExist, ValueError):
+            queryset = Note.public.for_user(user)
+
+        cache.set(cache_key, queryset, timeout=300)  # Кэшируем на 5 минут
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -104,7 +115,16 @@ class CategoryPage(DataMixin, ListView):
     h1 = title
 
     def get_queryset(self):
-        return Category.objects.for_user(self.request.user)
+        user = self.request.user
+        cache_key = f'user_{user.id}_categories'
+
+        cached_categories = cache.get(cache_key)
+        if cached_categories is not None:
+            return cached_categories
+
+        categories = Category.objects.for_user(user)
+        cache.set(cache_key, categories, timeout=300)
+        return categories
 
 
 class AddCategoryPage(DataMixin, CreateView):
