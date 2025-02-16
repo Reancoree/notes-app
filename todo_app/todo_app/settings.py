@@ -132,6 +132,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = reverse_lazy('user:profile')
 LOGIN_URL = reverse_lazy('login')
 
+# smtp
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.getenv('ADMIN_EMAIL')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+EMAIL_PORT = 587
+
+# redis
+
+# cache
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",

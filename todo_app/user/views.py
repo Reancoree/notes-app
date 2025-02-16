@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 
 from user.forms import RegisterForm
+from user.service import send
 
 
 @login_required
@@ -18,4 +19,5 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         form.save()
+        send(form.instance.email)
         return super().form_valid(form)
