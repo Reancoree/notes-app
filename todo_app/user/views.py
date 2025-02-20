@@ -5,6 +5,7 @@ from django.views.generic import FormView
 
 from user.forms import RegisterForm
 from user.service import send
+from user.tasks import send_register_email
 
 
 @login_required
@@ -19,5 +20,6 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         form.save()
-        send(form.instance.email)
+        # отправка email исп. celery
+        send_register_email.delay(form.instance.email)
         return super().form_valid(form)
