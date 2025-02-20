@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.core.cache import cache
@@ -94,6 +95,12 @@ class DeleteNotePage(DataMixin, DeleteView):
     title = 'Удаление заметки'
     h1 = title
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise PermissionDenied("У вас нет прав для удаления этой заметки.")
+        return obj
+
 
 class TrashNotePage(DataMixin, ListView):
     model = Note
@@ -157,3 +164,9 @@ class DeleteCategoryPage(DataMixin, DeleteView):
     success_url = reverse_lazy('category')
     title = 'Удаление категории'
     h1 = title
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise PermissionDenied("У вас нет прав для удаления этой категории.")
+        return obj
